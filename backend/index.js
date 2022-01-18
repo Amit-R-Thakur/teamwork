@@ -7,14 +7,16 @@ require("./database/connect")
 
 
 const User = require("./models/user");
+const todo = require("./models/todos");
 
 const userroutes = require("./routes/user");
+const todoroutes = require("./routes/todo");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api",userroutes);
-
+app.use("/api",todoroutes);
 
 app.get("/",(req,res)=>{
     res.send("hello")
