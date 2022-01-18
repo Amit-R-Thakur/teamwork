@@ -4,7 +4,7 @@ const port=process.env.PORT||6000
 require("./database/connect")
 
 
-const User = require("./teamwork/backend/models/user");
+const User = require("./models/user");
 
 const userroutes = require("./teamwork/backend/routes/user");
 
@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api",userroutes);
 
-app.get("/request",(req,re)=>{
 
 app.get("/",(req,res)=>{
     res.send("hello")
