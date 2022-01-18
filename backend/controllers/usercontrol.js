@@ -1,11 +1,9 @@
 const User = require("../models/user");
-require("../database/connect");
-
 exports.signup= async (req,res)=>{
     
-    const { name,email,password } = req.body
+    const { name,email,password} = req.body
      if(!email||!name||!password){
-         return res.send("please fill all the details")
+         return res.status(402).send("please fill all the details")
      }
     try{
         const users = new User ({name,email,password})
@@ -20,7 +18,12 @@ exports.signup= async (req,res)=>{
         }
     } catch(err){
         console.log(err);
+        const splitedMsg=err.message.split(" ");
+        if(splitedMsg[11]=="email:"){
+            res.status(404).send("Email is already registered")
+        }
+        else{
+            res.status(404).send("something went wrong")
+        }
     }
-
-
 }
