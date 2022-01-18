@@ -9,9 +9,9 @@ function App() {
   
       <BrowserRouter>
         <Routes>
-            {/* <Route path="/" exact element={<Login/>} /> */}
+            <Route path="/" exact element={<Login/>} />
             <Route path="/signin" element={<Signin/>}  />
-            <Route path='/' exact element={<Navbar/>} />
+            <Route path='/navbar'  element={<Navbar/>} />
         </Routes>
       </BrowserRouter>
   );

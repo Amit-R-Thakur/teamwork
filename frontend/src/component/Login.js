@@ -5,8 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -16,16 +14,27 @@ import { Link  } from 'react-router-dom'
 
 const Login = () => {
  
-   
+  const [data , SetData] = useState({
+    email:"",
+    password:""
+  })
+
+  const handleChange = ({currentTarget:input}) => {
+    SetData({ ...data, [input.name]: input.value})
+
+  }
+
+  
 
     const handleSubmit = () => {
+
     }
 
     return (
         <div>
                <Container component="main" maxWidth="xs" >
-                 <CssBaseline />
-                   <Box
+                  <CssBaseline />
+                     <Box
                       sx={{
                          marginTop: 8,
                          display: 'flex',
@@ -34,13 +43,15 @@ const Login = () => {
                          
                          }}
                      >
+               <Typography component="h1" variant="h5" style={{textAlign:'center'}}>Welcome to our TodoApp</Typography>
+
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                  <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
                   Log In
              </Typography>
-          <Box component="form" onSubmit="">
+          <Box component="form" >
 
             <TextField
               margin="normal"
@@ -51,8 +62,8 @@ const Login = () => {
               name="email"
               autoFocus
               autoComplete="off"
-              value={email}
-              onChange={(e) => setemail(e.target.value)}
+              value={data.email}
+              onChange={handleChange}
 
             />
             <TextField
@@ -64,8 +75,9 @@ const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
+              value={data.password}
+              onChange={handleChange}
+
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -80,18 +92,10 @@ const Login = () => {
             >
              LogIn
             </Button>
+         <Typography component="h1" variant="h6">Dont have account ?  <Link to="signin">SignIn</Link></Typography>
+            
 
-            <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
-              <Grid item>
-                <Link to="/signin" variant="body2">
-                </Link>
-              </Grid>
-            </Grid>
+            
           </Box>
         </Box>
       </Container>
