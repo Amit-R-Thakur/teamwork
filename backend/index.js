@@ -13,11 +13,11 @@ const userroutes = require("./routes/user");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 app.use("/api",userroutes);
 
 app.get("/request",(req,re)=>{
+
+app.get("/",(req,res)=>{
     res.send("hello")
 })
 app.listen(port,()=>{
