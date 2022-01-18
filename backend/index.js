@@ -6,6 +6,7 @@ dotenv.config({path:"./config.env"});
 require("./database/connect")
 
 
+
 const User = require("./models/user");
 const todo = require("./models/todos");
 
@@ -15,8 +16,13 @@ const todoroutes = require("./routes/todo");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.use("/api",userroutes);
 app.use("/api",todoroutes);
+
+app.use(ourapi,userroutes);
+
+
 
 app.get("/",(req,res)=>{
     res.send("hello")

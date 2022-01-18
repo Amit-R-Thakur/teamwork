@@ -1,12 +1,11 @@
 const User = require("../models/user");
 require("../database/connect");
 const bcrypt = require("bcrypt");
-
 exports.signup= async (req,res)=>{
     
-    const { name,email,password } = req.body
+    const { name,email,password} = req.body
      if(!email||!name||!password){
-         return res.send("please fill all the details")
+         return res.status(402).send("please fill all the details")
      }
     try{
         const users = new User ({name,email,password})
@@ -14,19 +13,20 @@ exports.signup= async (req,res)=>{
         const newusers= await users.save()
         if(newusers){
             res.status(200).send({user:newusers,token});
-            console.log(newusers);
         }
         else{
             res.send("something went wrong");
         }
     } catch(err){
-        console.log(err);
+        const splitedMsg=err.message.split(" ");
+        if(splitedMsg[11]=="email:"){
+            res.status(404).send("Email is already registered")
+        }
+        else{
+            res.status(404).send("something went wrong")
+        }
     }
-
-
 }
-
-
 exports.login = async (req,res)=>{
     const {email,password}=req.body;
 
@@ -36,8 +36,6 @@ exports.login = async (req,res)=>{
 
     try{
         const login = await User.findOne({email:email});
-        console.log(login);
-
         if(login){
             const compassword = await bcrypt.compare(password,login.password);
 
@@ -48,13 +46,13 @@ exports.login = async (req,res)=>{
                   res.status(200).send({user:login,token});
               }
               else{
-                  res.send("something went wrong");
+                  res.status(404).send("invalid details!");
               }
             
         }
         
     }catch(err){
-        console.log(err);
+        res.status(404).send("invalid details!");
     }
 
     }

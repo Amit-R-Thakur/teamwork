@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
 const userSchema = mongoose.Schema({
-    name:{
+    fullname:{
         type:String,
         require:true,
         trim:true
@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
         unique:true,
         validate: (value) => {
             if (!validator.isEmail(value)) {
-              throw new Error("Invalid Email Address");
+              throw new Error("Invalid Email Address!");
             }
           }
     },
@@ -26,7 +26,6 @@ const userSchema = mongoose.Schema({
 },{timestamps:true});
 
 userSchema.pre("save",async function(next){
-    console.log("hash")
     this.password = await bcrypt.hash(this.password,12);
     next();
 })
