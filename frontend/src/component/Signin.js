@@ -1,12 +1,10 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -14,6 +12,19 @@ import Container  from '@mui/material/Container';
 
 
 const Signin = () => {
+
+  const [data, setData ] = useState({
+    name:"",
+    email:"",
+    password:"",
+    cpassword:"",
+  })
+
+  const handleChange = ({currentTarget:input}) => {
+    setData({ ...data , [input.name]: input.value})
+
+  }
+   
     return (
         <div>
 
@@ -29,6 +40,8 @@ const Signin = () => {
                          
                          }}
                      >
+           <Typography component="h1" variant="h5" style={{textAlign:'center'}}>Welcome to our TodoApp</Typography>
+
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                  <LockOutlinedIcon />
               </Avatar>
@@ -46,6 +59,9 @@ const Signin = () => {
               name="name"
               autoFocus
               autoComplete="off"
+              autoCapitalize
+              value={data.name}
+              onChange={handleChange}
               
             />
             <TextField
@@ -57,6 +73,8 @@ const Signin = () => {
               name="email"
               autoFocus
               autoComplete="off"
+              value={data.email}
+              onChange={handleChange}
             
             />
             <TextField
@@ -68,18 +86,21 @@ const Signin = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              va
+              value={data.password}
+              onChange={handleChange}
 
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="cpassword"
               label="Confirm Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              value={data.cpassword}
+              onChange={handleChange}
               
             />
             <FormControlLabel
