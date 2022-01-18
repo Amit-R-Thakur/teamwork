@@ -1,5 +1,6 @@
 const User = require("../models/user");
 require("../database/connect");
+const bcrypt = require("bcrypt");
 
 exports.signup= async (req,res)=>{
     
@@ -24,3 +25,36 @@ exports.signup= async (req,res)=>{
 
 
 }
+
+
+exports.login = async (req,res)=>{
+    const {email,password}=req.body;
+
+    if(!email || !password){
+        return res.send("please enter all the details");
+    }
+
+    try{
+        const login = await User.findOne({email:email});
+        console.log(login);
+
+        if(login){
+            const compassword = await bcrypt.compare(password,login.password);
+
+            const token= await login.genToken();
+          
+              if(compassword){
+                //   res.status(200).send({logined_user:login},token);
+                  res.status(200).send({user:login,token});
+              }
+              else{
+                  res.send("something went wrong");
+              }
+            
+        }
+        
+    }catch(err){
+        console.log(err);
+    }
+
+    }
