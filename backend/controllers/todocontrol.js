@@ -1,5 +1,5 @@
 const express = require("express");
-const todo = require("../models/todos");
+const todo = require("../models/todo");
 require("../database/connect");
 
 exports.createtodo = async (req,res)=>{
