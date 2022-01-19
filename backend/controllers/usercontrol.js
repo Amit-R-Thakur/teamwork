@@ -1,6 +1,7 @@
 const User = require("../models/user");
 require("../database/connect");
 const bcrypt = require("bcrypt");
+const validator=require("validator")
 exports.signup= async (req,res)=>{
     
     const { name,email,password} = req.body
@@ -37,6 +38,11 @@ exports.login = async (req,res)=>{
     if(!email || !password){
         return res.send("please enter all the details");
     }
+    if(!validator.isEmail(email)){
+        res.status(404).send("invalid Email")
+    }
+    else
+    {
 
     try{
         const login = await User.findOne({email:email});
@@ -54,9 +60,15 @@ exports.login = async (req,res)=>{
               }
             
         }
+        else
+        {
+            res.status(404).send("User Not Found!");
+        }
+        
         
     }catch(err){
         res.status(404).send("invalid details!");
     }
+}
 
     }
