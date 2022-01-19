@@ -5,12 +5,7 @@ const app=express()
 const port=process.env.PORT||6000
 dotenv.config({path:"./config.env"});
 require("./database/connect")
-
-
-const ourapi=""
-const User = require("./models/user");
-const todo = require("./models/todos");
-
+const ourapi="/todo-list/api"
 const userroutes = require("./routes/user");
 app.use(cors())
 const todoroutes = require("./routes/todo");
