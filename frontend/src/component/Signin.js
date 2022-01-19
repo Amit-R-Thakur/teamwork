@@ -55,7 +55,7 @@ const Signin = () => {
               required
               fullWidth
               id="name"
-              label="Name"
+              label="Username"
               name="name"
               autoFocus
               autoComplete="off"
