@@ -22,6 +22,10 @@ exports.signup= async (req,res)=>{
         if(splitedMsg[11]=="email:"){
             res.status(404).send("Email is already registered")
         }
+        else if(splitedMsg.indexOf("email:")!=-1){
+            res.status(404).send("invalid email!")
+
+        }
         else{
             res.status(404).send("something went wrong")
         }
