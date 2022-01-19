@@ -10,7 +10,7 @@ exports.usermiddleware= async (req,res,next)=>{
     if(!validuser){
         res.send("invalid user");
     }
-    req._id=validuser._id               //this _id is used in the next step (the token is matched with req._id and then used in next work)      
+    req._id=validuser._id               //this _id is used in the next step (the func _id is matched with req._id and then used in next work)      
     next();
   }
   catch(err){
