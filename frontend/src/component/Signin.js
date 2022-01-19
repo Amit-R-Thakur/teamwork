@@ -85,9 +85,9 @@ const Signin = () => {
                  <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                  SignIn
+                  SignUp
              </Typography>
-          <Box component="form" onSubmit="">
+          <Box component="form"  method='post'>
 
           <TextField
               margin="normal"
