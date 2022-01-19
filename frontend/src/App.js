@@ -9,11 +9,15 @@ function App() {
   
       <BrowserRouter>
         <Routes>
-            <Route path="/" exact element={<Login/>} />
-            <Route path="/signin" element={<Signin/>}  />
-            <Route path='/navbar'  element={<Navbar/>} />
+             <Route path="/" exact element={<Login/>}  />
+             <Route path="/signin"  element={<Signin/>} /> 
+             <Route path='/navbar'  element={<Navbar/>} />
+        
         </Routes>
+
+      
       </BrowserRouter>
+      
   );
 }
 
