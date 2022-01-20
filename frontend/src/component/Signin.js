@@ -13,13 +13,8 @@ import Container  from '@mui/material/Container';
 import axios from "../axios"
 import cookie from "js-cookie"
 const Signin = () => {
-<<<<<<< HEAD
-  
 
-  
-=======
   const history=useNavigate()
->>>>>>> origin
 
   const [data, setData ] = useState({
     name:"",
@@ -93,11 +88,8 @@ const Signin = () => {
               <Typography component="h1" variant="h5">
                   SignUp
              </Typography>
-<<<<<<< HEAD
-          <Box component="form" onSubmit="" >
-=======
+             
           <Box component="form"  method='post'>
->>>>>>> origin
 
           <TextField
               margin="normal"
