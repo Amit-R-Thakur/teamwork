@@ -1,4 +1,5 @@
 import React , {useState} from 'react'
+import {useNavigate} from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,26 +11,40 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link  } from 'react-router-dom'
-
-
+import axios from "../axios"
+import cookie from "js-cookie"
 const Login = () => {
+  const navigate=useNavigate()
  
   const [data , SetData] = useState({
     email:"",
     password:""
   })
+  // Handle Error........
+  const [errr,setError]=useState({
+    msg:""
+  })
 
-  const handleChange = ({currentTarget:input}) => {
-    SetData({ ...data, [input.name]: input.value})
+  const handleChange = (e) => {
+    e.preventDefault()
+    const {name,value}=e.target
+    SetData({ ...data, [name]: value})
 
   }
-
-  
-
-    const handleSubmit = () => {
+  const getLogin=async()=>{
+    try{
+      const isLogedIn=await axios.post("/login",data)
+      if(isLogedIn){
+        await cookie.set("token",isLogedIn.data.token)
+        navigate("/navbar")
+      }
 
     }
+    catch(err){
+      setError({...errr,msg:`*${err.response.data}`})
+    }
 
+  }
     return (
         <div>
                <Container component="main" maxWidth="xs" >
@@ -51,7 +66,7 @@ const Login = () => {
               <Typography component="h1" variant="h5">
                   Log In
              </Typography>
-          <Box component="form" >
+          <Box component="form" method='post'>
 
             <TextField
               margin="normal"
@@ -83,16 +98,17 @@ const Login = () => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
+              onClick={getLogin}
             >
              LogIn
             </Button>
-         <Typography component="h1" variant="h6">Dont have account ?  <Link to="signin">SignIn</Link></Typography>
+            <b style={{color:"red"}}>{errr.msg}</b>
+         <Typography component="h1" variant="h6">Dont have account ?  <Link to="signup">SignUp</Link></Typography>
             
 
             

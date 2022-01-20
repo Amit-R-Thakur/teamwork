@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {useNavigate} from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,23 +10,64 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container  from '@mui/material/Container';
-
-
+import axios from "../axios"
+import cookie from "js-cookie"
 const Signin = () => {
+<<<<<<< HEAD
   
 
   
+=======
+  const history=useNavigate()
+>>>>>>> origin
 
   const [data, setData ] = useState({
     name:"",
     email:"",
     password:"",
-    cpassword:"",
+    cpassword:""
+  })
+  // Handle Error
+  const [err,setError]=useState({
+    passErr:"",
+    cPassErr:"",
+    nameErr:"",
+    emailErr:""
   })
 
-  const handleChange = ({currentTarget:input}) => {
-    setData({ ...data , [input.name]: input.value})
+  const handleChange = (e) => {
+    e.preventDefault()
+    const {name,value}=e.target
+    if(name=="cpassword")
+    {
+      if(value!=data.password){
+        setError({...err,cPassErr:"*Password Not Matched"})
 
+      }
+      else{
+        setError({...err,cPassErr:""})
+
+      }
+    }
+    setData({...data,[name]:value})
+  }
+  const sendData=async()=>{
+    try{
+      if(err.cPassErr==""){
+    const theSignIn=await axios.post("/signup",data)
+    if(theSignIn){
+     await cookie.set("token",theSignIn.data.token)
+      console.log(theSignIn.data.token)
+      history("/navbar")
+    }
+    
+
+  }
+
+    }
+    catch(e){
+      setError({...err,emailErr:`*${e.response.data}`})
+    }
   }
    
     return (
@@ -49,9 +91,13 @@ const Signin = () => {
                  <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                  SignIn
+                  SignUp
              </Typography>
+<<<<<<< HEAD
           <Box component="form" onSubmit="" >
+=======
+          <Box component="form"  method='post'>
+>>>>>>> origin
 
           <TextField
               margin="normal"
@@ -60,13 +106,13 @@ const Signin = () => {
               id="name"
               label="Username"
               name="name"
-              autoFocus
               autoComplete="off"
               autoCapitalize
               value={data.name}
               onChange={handleChange}
               
             />
+            <b style={{color:"red"}}>{err.nameErr}</b>
             <TextField
               margin="normal"
               required
@@ -74,12 +120,12 @@ const Signin = () => {
               id="email"
               label="Email Address"
               name="email"
-              autoFocus
               autoComplete="off"
               value={data.email}
               onChange={handleChange}
             
             />
+            <b style={{color:"red"}}>{err.emailErr}</b>
             <TextField
               margin="normal"
               required
@@ -93,6 +139,7 @@ const Signin = () => {
               onChange={handleChange}
 
             />
+            <b style={{color:"red"}}>{err.passErr}</b>
             <TextField
               margin="normal"
               required
@@ -106,15 +153,18 @@ const Signin = () => {
               onChange={handleChange}
               
             />
+            
+           <b style={{color:"red"}}>{err.cPassErr}</b>
+            
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Accept terms and conditions"
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={sendData}
             >
              SignIn
             </Button>

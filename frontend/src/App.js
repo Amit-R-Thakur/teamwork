@@ -9,10 +9,16 @@ function App() {
   
       <BrowserRouter>
         <Routes>
+<<<<<<< HEAD
              <Route path="/" exact element={<Login/>}  />
              <Route path="/signin"  element={<Signin/>} /> 
              <Route path='/navbar'  element={<Navbar/>} />
         
+=======
+            <Route path="/" exact element={<Login/>} />
+            <Route path="/signup" element={<Signin/>}  />
+            <Route path='/navbar'  element={<Navbar/>} />
+>>>>>>> origin
         </Routes>
 
       
