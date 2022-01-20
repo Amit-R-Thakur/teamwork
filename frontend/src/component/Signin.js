@@ -9,12 +9,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container  from '@mui/material/Container';
-import * as Yup from 'yup';
-
-const SignInFormSchema =(data) => Yup.object().shape({
-  name: Yup.string().name("").alert('username is not ')
-    
-})
 
 
 const Signin = () => {
@@ -57,7 +51,7 @@ const Signin = () => {
               <Typography component="h1" variant="h5">
                   SignIn
              </Typography>
-          <Box component="form" onSubmit="" validation={SignInFormSchema}>
+          <Box component="form" onSubmit="" >
 
           <TextField
               margin="normal"
