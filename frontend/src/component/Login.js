@@ -19,20 +19,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 const Login = () => {
 
-
-  // const modal = {
-  //   position: 'absolute',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  //   width: 300,
-  //   height:400,
-  //   bgcolor: 'background.paper',
-  //   boxShadow: 24,
-  
-  
-  // };
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false)
@@ -96,7 +82,7 @@ const Login = () => {
           <Box component="form" method='post'>
 
             <TextField
-              margin="normal"
+              margin="normal"   
               required
               fullWidth
               id="email"
