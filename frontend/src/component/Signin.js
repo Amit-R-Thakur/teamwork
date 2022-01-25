@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container  from '@mui/material/Container';
 import axios from "../axios"
 import cookie from "js-cookie"
+import { Alert } from '@mui/material';
 
 const Signin = () => {
 
@@ -54,6 +55,7 @@ const Signin = () => {
     if(theSignIn){
      await cookie.set("token",theSignIn.data.token)
       console.log(theSignIn.data.token)
+      alert('Sign In Succesfully')
       history("/navbar")
     }
     

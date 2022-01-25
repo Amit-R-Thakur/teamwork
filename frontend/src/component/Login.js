@@ -147,6 +147,7 @@ const Login = () => {
     height:310,
     backgroundColor: 'white',
     boxShadow: 24,
+    border:'none'
     }}
     >
   <CssBaseline/>
