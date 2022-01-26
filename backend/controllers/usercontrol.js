@@ -9,7 +9,7 @@ exports.signup= async (req,res)=>{
          return res.status(402).send("please fill all the details")
      }
     try{
-        const users = new User ({name,email,password})
+        const users = new User ({fullname:name,email,password})
         const token = await users.genToken();
         const newusers= await users.save()
         if(newusers){
@@ -36,10 +36,10 @@ exports.login = async (req,res)=>{
     const {email,password}=req.body;
 
     if(!email || !password){
-        return res.send("please enter all the details");
+        return res.status(404).send("please enter all the details!");
     }
     if(!validator.isEmail(email)){
-        res.status(404).send("invalid Email")
+      return  res.status(404).send("invalid Email")
     }
     else
     {
@@ -69,6 +69,17 @@ exports.login = async (req,res)=>{
     }catch(err){
         res.status(404).send("invalid details!");
     }
-}
+} }
+
+exports.getUser=async(req,res)=>{
+    try{
+        const _id=req
+        const user=await User.findById(_id)
+        res.send(user)
 
     }
+    catch(err){
+        console.log(err)
+    }
+
+}

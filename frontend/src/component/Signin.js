@@ -13,11 +13,15 @@ import Container  from '@mui/material/Container';
 import axios from "../axios"
 import cookie from "js-cookie"
 import { Alert } from '@mui/material';
+import {useSelector,useDispatch} from "react-redux"
+import { signUp } from '../redux/action/user/userAction';
+import {Navigate} from "react-router-dom"
 
 const Signin = () => {
-
+ 
   const history=useNavigate()
-   
+   const dispatch=useDispatch()
+   const userState=useSelector((state)=>state.USER)
   const [data, setData ] = useState({
     name:"",
     email:"",
@@ -51,23 +55,28 @@ const Signin = () => {
   const sendData=async()=>{
     try{
       if(err.cPassErr==""){
-    const theSignIn=await axios.post("/signup",data)
-    if(theSignIn){
-     await cookie.set("token",theSignIn.data.token)
-      console.log(theSignIn.data.token)
-      alert('Sign In Succesfully')
-      history("/navbar")
-    }
-    
+    // const theSignIn=await axios.post("/signup",data)
+    // if(theSignIn){
+    //  await cookie.set("token",theSignIn.data.token)
+    //   console.log(theSignIn.data.token)
+    //   alert('Sign In Succesfully')
+    //   history("/navbar")
+    // }
+    await dispatch(signUp(data))
 
   }
 
     }
     catch(e){
-      setError({...err,emailErr:`*${e.response.data}`})
+      console.log(e)
     }
   }
-   
+   if(userState.isLogedIn){
+     return<Navigate to={"/navbar"}/>
+    }
+    else
+    {
+     
     return (
         <div>
 
@@ -149,7 +158,7 @@ const Signin = () => {
               
             />
             
-           <b style={{color:"red"}}>{err.cPassErr}</b>
+           <b style={{color:"red"}}>{userState.err.email}</b><br/>
             
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -170,6 +179,8 @@ const Signin = () => {
       </Container>
         </div>
     )
+     
+  }
 }
 
 export default Signin;

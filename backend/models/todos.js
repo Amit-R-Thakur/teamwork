@@ -2,7 +2,17 @@ const mongoose = require("mongoose");
 
 const todoSchema = mongoose.Schema({
     content:{
-        type:String
+        type:String,
+        require:true
+    },
+    userId:{
+        type:mongoose.Types.ObjectId,
+        require:true,
+        ref:"USER"
+    },
+    status:{
+        type:Boolean,
+        default:false
     }
 },{
     timestamps:true
