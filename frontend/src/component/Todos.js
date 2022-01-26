@@ -1,12 +1,13 @@
-import { CssBaseline , TextField  , Button , Checkbox, } from '@mui/material';
-import React from 'react'
+import { CssBaseline , TextField  , Button , Checkbox, Modal , Typography } from '@mui/material';
+import React, {useState} from 'react'
 import Container from '@mui/material/Container'
 import Box from "@mui/material/Box"
 // import Typography  from '@mui/material/Typography';
 
-
 const Todos = () => {
-
+    const [open, setOpen] = useState(false);
+    const editModalOpen = () => setOpen(true);
+    const editModalClose = () => setOpen(false)
 
 
 
@@ -32,7 +33,8 @@ const Todos = () => {
                          color:'white',
                          position:'relative',
                          top:'10px',
-                         margin:'10px'
+                         margin:'10px',
+                         width:'30%'
                         }}
                         >Add +
                      </Button>
@@ -61,7 +63,7 @@ const Todos = () => {
                 </Box>
        
                 <Box style={{ margin:'15px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
+                    <Button style={{color:'#22B4DB'}} onClick={editModalOpen} > Edit</Button>
                     <Button style={{color:'#DE192E'}}>Delete</Button>
                  </Box>
             
@@ -78,7 +80,7 @@ const Todos = () => {
                 </Box>
 
                 <Box style={{ margin:'15px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
+                    <Button style={{color:'#22B4DB'}} > Edit</Button>
                     <Button style={{color:'#DE192E'}}>Delete</Button>
                  </Box>
              </Box>
@@ -96,7 +98,7 @@ const Todos = () => {
                 </Box>
 
                 <Box style={{ margin:'15px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
+                    <Button style={{color:'#22B4DB'}} > Edit</Button>
                     <Button style={{color:'#DE192E'}}>Delete</Button>
                  </Box>
              </Box>
@@ -106,6 +108,39 @@ const Todos = () => {
            </Box>          
 </Container>
 
+<Modal
+  open={open}
+  onClose={editModalClose}
+  
+>
+  <Box style={{ position: 'absolute',
+  top: '50%',
+  left: '50%',
+  backgroundColor:'white',
+  transform: 'translate(-50%, -50%)',
+  display:'flex',
+  borderRadius:'10px'
+  
+
+  
+  }}>
+    <div style={{margin:'10px',display:'flex',width:'400px'}}>
+     <TextField 
+              margin="normal"   
+              required
+              fullWidth
+              id="edit"
+              label="Edit"
+              name="edit"
+              autoFocus
+              autoComplete="on"
+              width='100%'
+              
+        />
+        <Button style={{backgroundColor:'blue',margin:'20px', height:'50px' ,color:'white'}} >Save</Button>
+        </div>
+  </Box>
+</Modal>
         </div>
 
     )

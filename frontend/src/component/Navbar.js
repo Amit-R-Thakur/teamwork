@@ -11,11 +11,13 @@ const Navbar = () => {
 
     return (
         <div>
-             <Box sx={{ flexGrow: 1}}>
-               
+             <Box sx={{ flexGrow: 2}}>
+
       <AppBar position="static" style={{height:'70px'}}>
         <Toolbar style={{justifyContent:'flex-end'}}>
-         
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+              Welcome User
+          </Typography>
           <Button color="inherit" >LogOut</Button>
         </Toolbar>
       </AppBar>

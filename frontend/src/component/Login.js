@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState, useEffect} from 'react'
 import {useNavigate} from "react-router-dom"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -14,7 +14,7 @@ import { Link  } from 'react-router-dom'
 import axios from '../axios'
 import cookie from "js-cookie"
 import CircularProgress from '@mui/material/CircularProgress';
-import { Card, Modal } from '@mui/material';
+import { Card, Modal , LinearProgress } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 const Login = () => {
@@ -22,6 +22,8 @@ const Login = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false)
+
+     
 
 
 
@@ -44,17 +46,20 @@ const Login = () => {
 
   }
   const getLogin=async()=>{ 
+   
     try{
       const isLogedIn=await axios.post("/login",data)
       if(isLogedIn){
         await cookie.set("token",isLogedIn.data.token)
         navigate("/navbar")
       }
+     
 
     }
     catch(err){
       setError({...errr,msg:`*${err.response.data}`})
     }
+   
  }
 
 
@@ -62,6 +67,7 @@ const Login = () => {
         <div>
                <Container component="main" maxWidth="xs" >
                   <CssBaseline />
+
                      <Box
                       sx={{
                          marginTop: 8,
@@ -89,7 +95,7 @@ const Login = () => {
               label="Email Address"
               name="email"
               autoFocus
-              autoComplete="off"
+              autoComplete="on"
               value={data.email}
               onChange={handleChange}
 
