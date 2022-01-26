@@ -16,6 +16,7 @@ import { Alert } from '@mui/material';
 import {useSelector,useDispatch} from "react-redux"
 import { signUp } from '../redux/action/user/userAction';
 import {Navigate} from "react-router-dom"
+import CircularIndeterminate from './Loading';
 
 const Signin = () => {
  
@@ -76,6 +77,11 @@ const Signin = () => {
     }
     else
     {
+      if(userState.loading){
+        return <CircularIndeterminate/>
+      }
+      else
+      {
      
     return (
         <div>
@@ -111,7 +117,7 @@ const Signin = () => {
               label="Username"
               name="name"
               autoComplete="off"
-              autoCapitalize
+              autoCapitalize="true"
               value={data.name}
               onChange={handleChange}
               
@@ -143,7 +149,6 @@ const Signin = () => {
               onChange={handleChange}
 
             />
-            <b style={{color:"red"}}>{err.passErr}</b>
             <TextField
               margin="normal"
               required
@@ -157,6 +162,8 @@ const Signin = () => {
               onChange={handleChange}
               
             />
+            
+            <b style={{color:"red"}}>{err.cPassErr}</b>
             
            <b style={{color:"red"}}>{userState.err.email}</b><br/>
             
@@ -179,6 +186,7 @@ const Signin = () => {
       </Container>
         </div>
     )
+  }
      
   }
 }

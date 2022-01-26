@@ -7,7 +7,6 @@ export const getTodo=()=>async(dispatch,getState)=>{
         dispatch({type:todo.TODO_REQUESTED})
         const theTodo=await axios.get("todo/get/user",{headers:{authorization:token}})
         if(theTodo){
-            console.log(theTodo)
             dispatch({type:todo.TODO_ADD,payload:theTodo.data})
             dispatch({type:todo.TODO_SUCCESS})
         }
@@ -46,6 +45,20 @@ export const toggleTodoState=(_id)=>async(dispatch,getState)=>{
     }
 
 }
+
+export const todoEdit=(_id,value)=>async(dispatch,getState)=>{
+    try{
+        const {token}=getState().USER
+        dispatch({type:todo.TODO_REQUESTED})
+        await axios.patch(`/todo/update/${_id}`,{content:value},{headers:{authorization:token}})
+        dispatch(getTodo())
+
+    }
+    catch(err){
+        console.log(err.response.data)
+    }
+}
+
 export const deleteTodo=(_id)=>async(dispatch,getState)=>{
     try{
         const {token}=getState().USER

@@ -5,6 +5,7 @@ import Signin from './component/Signin';
 import Navbar from './component/Navbar';
 import { CircularProgress } from '@mui/material';
 import { useEffect } from 'react';
+import CircularIndeterminate from "./component/Loading"
 
 import { setUser } from './redux/action/user/userAction';
 import { useDispatch ,useSelector} from 'react-redux';
@@ -15,6 +16,10 @@ function App() {
     if(userState.token){
     await dispatch(setUser())}
   },[dispatch])
+ if(userState.loading){
+   return <CircularIndeterminate/>
+ }
+ else{
   return (
       <BrowserRouter>
         <Routes>
@@ -22,12 +27,10 @@ function App() {
             <Route path="/" exact element={<Login/>} />
             <Route path="/signup" element={<Signin/>}  />
             <Route path='/navbar'  element={<Navbar/>} />
-            {/* <Route path='/loading'  element={<CircularIndeterminate/>} /> */}
-
         </Routes>
       </BrowserRouter>
       
-  );
+  );}
 }
 
 export default App;

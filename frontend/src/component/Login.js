@@ -17,6 +17,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/action/user/userAction";
 import {Navigate} from "react-router-dom"
+import CircularIndeterminate from "./Loading";
 const Login = () => {
   const dispatch = useDispatch();
   const userState=useSelector((state)=>state.USER)
@@ -40,6 +41,12 @@ const Login = () => {
 if(userState.isLogedIn)return <Navigate to={"/navbar"}/>
 else
 {
+  if(userState.loading)
+  {
+    return <CircularIndeterminate/>
+  }
+  else{
+    
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -114,6 +121,9 @@ else
       </Container>
     </div>
   );
+  
+}
+
 }
 };
 

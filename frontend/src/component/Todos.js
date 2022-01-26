@@ -4,16 +4,36 @@ import Container from '@mui/material/Container'
 import Box from "@mui/material/Box"
 // import Typography  from '@mui/material/Typography';
 import {useDispatch,useSelector} from "react-redux"
-import { createTodo,getTodo ,toggleTodoState,deleteTodo} from '../redux/action/todo/todoAction';
+import { createTodo,getTodo ,toggleTodoState,deleteTodo,todoEdit} from '../redux/action/todo/todoAction';
 import { useState ,useEffect} from 'react';
-
+import CircularIndeterminate from './Loading';
 const Todos = () => {
     const TodoState=useSelector((state)=>state.TODO)
     const dispatch=useDispatch()
+    const [open, setOpen] = useState({
+        status:false,
+        todoId:""
+    });
     const [todo,setTodo]=useState("")
     const sendTodo=(e)=>{
         const {value}=e.target
         setTodo(value)
+    }
+    const [editing,setEditing]=useState("")
+    const manageEditing=(e)=>{
+        const {value}=e.target
+        setEditing(value)
+    }
+    const editModalOpen = (todoId,value) => {
+        setOpen({status:true,todoId});
+        setEditing(value)
+    
+    }
+    const editModalClose = () => {setOpen({ status:false,
+        toDoId:""})}
+    const sendEditing=async(_id)=>{
+        await dispatch(todoEdit(_id,editing))
+        editModalClose()
     }
     const manageCreateTodo=async()=>{
        await dispatch(createTodo(todo))
@@ -32,21 +52,11 @@ const Todos = () => {
         }
         getData()
     },[dispatch])
-
-    const [open, setOpen] = useState({
-        status:false,
-        todoId:"",
-        value:""
-    });
-    const editModalOpen = (todoId,value) => setOpen({status:true,
-        todoId,
-        value});
-    const editModalClose = () => setOpen({ status:false,
-        toDoId:"",
-        value:""})
-
-
-
+   if(TodoState.loading)
+   {
+       return<CircularIndeterminate/>
+   }
+   else{
     return (
         <div >
          <Container component="main" maxWidth='sm'  >
@@ -95,7 +105,7 @@ const Todos = () => {
 
  {/* main div todo */}
  {TodoState.todo.map((data)=>(
-      <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
+      <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}} key={data._id}>
       <Box width="15%">  
             <Checkbox checked={data.status} onClick={()=>{toggle(data._id)}}/>
       </Box>
@@ -145,16 +155,18 @@ const Todos = () => {
               autoFocus
               autoComplete="on"
               width='100%'
-              value={open.value}
+              value={editing}
+              onChange={manageEditing}
               
         />
-        <Button style={{backgroundColor:'blue',margin:'20px', height:'50px',width:"5%" ,color:'white'}} >Save</Button>
+        <Button style={{backgroundColor:'blue',margin:'20px', height:'50px',width:"5%" ,color:'white'}} onClick={()=>{sendEditing(open.todoId)}}>Save</Button>
         </div>
   </Box>
 </Modal>
         </div>
 
     )
+}
 }
 
 export default Todos;

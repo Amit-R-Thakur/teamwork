@@ -22,7 +22,6 @@ export const signUp=(data)=>async(dispatch)=>{
     try{
         dispatch({type:user.USER_SIGNUP_REQUESTED})
         const isSignIn=await axios.post("/signup",data)
-        console.log(isSignIn)
         if(isSignIn){
             await Cookies.set("todoToken",isSignIn.data.token)
             dispatch({type:user.CLEAR_ERROR})
@@ -42,7 +41,6 @@ export const setUser=()=>async(dispatch,getState)=>{
         const userState=getState().USER
         const theUser=await axios.get("/get/user",{headers:{authorization:userState.token}})
         dispatch({type:user.SET_USER,payload:theUser.data})
-        console.log(theUser)
 
 
     }
