@@ -7,11 +7,13 @@ import { CircularProgress } from '@mui/material';
 import { useEffect } from 'react';
 
 import { setUser } from './redux/action/user/userAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch ,useSelector} from 'react-redux';
 function App() {
+  const userState=useSelector((state)=>state.USER)
   const dispatch=useDispatch()
   useEffect(async()=>{
-    await dispatch(setUser())
+    if(userState.token){
+    await dispatch(setUser())}
   },[dispatch])
   return (
       <BrowserRouter>
@@ -20,6 +22,8 @@ function App() {
             <Route path="/" exact element={<Login/>} />
             <Route path="/signup" element={<Signin/>}  />
             <Route path='/navbar'  element={<Navbar/>} />
+            {/* <Route path='/loading'  element={<CircularIndeterminate/>} /> */}
+
         </Routes>
       </BrowserRouter>
       

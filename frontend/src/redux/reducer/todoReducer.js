@@ -21,6 +21,11 @@ export const todoReducer = (state = initialState, action) => {
               ...state,
               todo:action.payload
           }
+          case todo.TODO_CLEAR:
+            return{
+              loading: false,
+             todo: [],
+            }
       default:
           return state
   }

@@ -10,7 +10,6 @@ exports.createtodo = async (req, res) => {
   try {
     const { _id } = req;
     const newtodo = new todo({ content, userId: _id });
-    console.log(newtodo);
     const todos = await newtodo.save();
     if (todos) {
       res.status(200).send({ todos });
@@ -38,7 +37,8 @@ exports.gettodobyid = async (req, res) => {
 exports.getTodoByUserId = async (req, res) => {
   try {
     const { _id } = req;
-    const theTodo = await todo.find({ where: { userId: _id } });
+    console.log(_id)
+    const theTodo = await todo.find({userId: _id  });
     if (theTodo) {
       res.status(200).send(theTodo);
     } else {
@@ -46,6 +46,7 @@ exports.getTodoByUserId = async (req, res) => {
     }
   } catch (err) {
     res.status(404).send("todo not found!");
+    console.log(err)
   }
 };
 exports.updateTodoStatus = async (req, res) => {
@@ -94,6 +95,5 @@ exports.deletetodo = async (req, res) => {
     }
   } catch (err) {
     res.status(404).send("something went wrong!");
-    console.log(err);
   }
 };

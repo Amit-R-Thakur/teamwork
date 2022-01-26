@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import axios from "../axios";
 import cookie from "js-cookie";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/action/user/userAction";
 import {Navigate} from "react-router-dom"
@@ -76,7 +75,7 @@ else
               label="Email Address"
               name="email"
               autoFocus
-              autoComplete="off"
+              autoComplete="on"
               value={data.email}
               onChange={handleChange}
             />

@@ -1,6 +1,7 @@
 import * as user from "../../constant/userConstant"
 import axios from "../../../axios"
 import Cookies from "js-cookie"
+import {TODO_CLEAR} from "../../constant/todoConstant"
 export const login=(data)=>async(dispatch)=>{
     try{
         dispatch({type:user.USER_LOGIN_REQUESTED})
@@ -55,5 +56,6 @@ export const setUser=()=>async(dispatch,getState)=>{
 export const logOut=()=>async(dispatch)=>{
     await Cookies.remove("todoToken")
     dispatch({type:user.LOGOUT})
+    dispatch({type:TODO_CLEAR})
 
 }
