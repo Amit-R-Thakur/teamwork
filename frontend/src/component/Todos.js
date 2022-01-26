@@ -3,9 +3,35 @@ import React from 'react'
 import Container from '@mui/material/Container'
 import Box from "@mui/material/Box"
 // import Typography  from '@mui/material/Typography';
-
+import {useDispatch,useSelector} from "react-redux"
+import { createTodo,getTodo ,toggleTodoState,deleteTodo} from '../redux/action/todo/todoAction';
+import { useState ,useEffect} from 'react';
 
 const Todos = () => {
+    const TodoState=useSelector((state)=>state.TODO)
+    const dispatch=useDispatch()
+    const [todo,setTodo]=useState("")
+    const sendTodo=(e)=>{
+        const {value}=e.target
+        setTodo(value)
+    }
+    const manageCreateTodo=async()=>{
+       await dispatch(createTodo(todo))
+       setTodo("")
+    }
+    const toggle=async(id)=>{
+        await dispatch(toggleTodoState(id))
+    }
+    const deleteTodoData=async(id)=>{
+        await dispatch(deleteTodo(id))
+    }
+
+    useEffect(()=>{
+        const getData=async()=>{
+            const data=await dispatch(getTodo())
+        }
+        getData()
+    },[dispatch])
 
 
 
@@ -16,6 +42,7 @@ const Todos = () => {
 
             <Box component='form'  style={{display:'flex', marginTop:'15px'}}>
                     <TextField
+                         onChange={sendTodo}
                         margin="normal"
                         required
                         fullWidth
@@ -24,8 +51,9 @@ const Todos = () => {
                         autoFocus
                         autoComplete="off"
                         placeholder="Add your work here"
+                        value={todo}
                    /> 
-                    <Button style={{
+                    <Button onClick={manageCreateTodo} style={{
                          padding:'10px',
                          backgroundColor:'blue' , 
                          height:'50px',
@@ -51,105 +79,29 @@ const Todos = () => {
                            
                              }}>
  {/* main div todo */}
+ {TodoState.todo.map((data)=>(
+      <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
+      <Box width="15%">  
+            <Checkbox checked={data.status} onClick={()=>{toggle(data._id)}}/>
+      </Box>
 
-         <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
-                <Box width="15%">  
-                      <Checkbox />
-                </Box>
+      <Box style={{width:'60%'}}>
+          <h4>{data.content}</h4>
+      </Box>
 
-                <Box style={{width:'60%'}}>
-                    <h4>Hello World</h4>
-                </Box>
-       
-                <Box style={{ margin:'12px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
-                    <Button style={{color:'#DE192E'}}>Delete</Button>
-                 </Box>
-            
-             </Box>
-             <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
-                <Box width="15%">  
-                      <Checkbox />
-                </Box>
-
-                <Box style={{width:'60%'}}>
-                    <h4>Hello World</h4>
-                </Box>
-       
-                <Box style={{ margin:'12px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
-                    <Button style={{color:'#DE192E'}}>Delete</Button>
-                 </Box>
-            
-             </Box>
-             <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
-                <Box width="15%">  
-                      <Checkbox />
-                </Box>
-
-                <Box style={{width:'60%'}}>
-                    <h4>Hello World</h4>
-                </Box>
-       
-                <Box style={{ margin:'12px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
-                    <Button style={{color:'#DE192E'}}>Delete</Button>
-                 </Box>
-            
-             </Box>
-             <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
-                <Box width="15%">  
-                      <Checkbox />
-                </Box>
-
-                <Box style={{width:'60%'}}>
-                    <h4>Hello World</h4>
-                </Box>
-       
-                <Box style={{ margin:'12px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
-                    <Button style={{color:'#DE192E'}}>Delete</Button>
-                 </Box>
-            
-             </Box>
-{/* second div */}
-         <Box style={{display:'flex', boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
-            <CssBaseline/>
-                <Box width="15%" style={{marginTop:'15px'}}>
-                      <Checkbox/>
-                </Box>
-
-                <Box style={{width:'60%', margin:'px'}}>
-                    <h4>Hello World</h4>
-                </Box>
-
-                <Box style={{ margin:'15px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
-                    <Button style={{color:'#DE192E'}}>Delete</Button>
-                 </Box>
-             </Box>
-             
-{/* second div */}
-
-         <Box style={{display:'flex',boxShadow:'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',}}>
-            <CssBaseline/>
-                <Box width="15%" style={{marginTop:'15px'}}>
-                      <Checkbox/>
-                </Box>
-
-                <Box style={{width:'60%', margin:'px'}}>
-                    <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</h4>
-                </Box>
-
-                <Box style={{ margin:'15px' }}>
-                    <Button style={{color:'#22B4DB'}}> Edit</Button>
-                    <Button style={{color:'#DE192E'}}>Delete</Button>
-                 </Box>
-             </Box>
+      <Box style={{ margin:'12px' }}>
+          <Button style={{color:'#22B4DB'}}> Edit</Button>
+          <Button style={{color:'#DE192E'}} onClick={()=>{deleteTodoData(data._id)}}>Delete</Button>
+       </Box>
+  
+   </Box>
 
 
+ ))}
+ 
+ </Box>  
 
-           </Box>          
+               
 </Container>
 
         </div>
