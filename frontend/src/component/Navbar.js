@@ -31,7 +31,7 @@ const Navbar = () => {
              <Box sx={{ flexGrow: 1}}>
       <AppBar position="static" style={{height:'70px'}}>
         <Toolbar style={{justifyContent:'space-between'}}>
-          <h3>Welcome, {userState.user.fullname}</h3>
+          <Typography>Welcome, {userState.user.fullname}</Typography>
           <Button color="inherit" onClick={logedOut}>LogOut</Button>
         </Toolbar>
       </AppBar>
